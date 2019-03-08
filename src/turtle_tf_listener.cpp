@@ -28,7 +28,18 @@ int main(int argc, char** argv){
         tf::StampedTransform transform;
         try{
             // 监听两个海龟之间的坐标变换并存入transform中，time(0)表示获得最近的坐标变换
+            // 跟随方法1：等待坐标变换，至多等3s。
+            ros::Time now = ros::Time::now();
+            listener.waitForTransform("/turtle2", "turtle1", now, ros::Duration(3.0));
+            listener.lookupTransform("/turtle2", "/turtle1", now, transform);
+            // 跟随方法2：我们可以lookuptime(0)，去获得最近的坐标变换，这样做没问题
             listener.lookupTransform("/turtle2", "/turtle1", ros::Time(0), transform);
+            // 跟随方法3：我们让海龟2跟随海龟1在5s钟之前的位置
+            ros::Time past = ros::Time::now() - ros::Duration(5.0);
+            listener.waitForTransform("/turtle2", "/turtle1",
+                                      past, ros::Duration(1.0));
+            listener.lookupTransform("/turtle2", "/turtle1",
+                                      past, transform);
         }
         catch(tf::TransformException &ex){
             ROS_ERROR("%s", ex.what());
