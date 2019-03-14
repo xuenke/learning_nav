@@ -7,7 +7,8 @@
   <!-- start up wg world -->
   <include file="$(find gazebo_ros)/launch/willowgarage_world.launch"/>
   <arg name="model" />
-  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+  <!--param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" /-->
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find learning_nav)/urdf/robot1_base_04.xacro" />
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
   <!-- start robot state publisher -->
@@ -18,11 +19,13 @@
 
   <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -z 0.1 -model robot_model" respawn="false" output="screen" />
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find chapter8_tutorials)/launch/mapping.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find learning_nav)/launch/mapping.rviz"/>
   <node name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
     <remap from="scan" to="/robot/laser/scan"/>
     <param name="base_link" value="base_footprint"/>
   </node>
+  <!--必须建立odom坐标系与base_footprint坐标系之间的关系(odom是建在map坐标系的 -->
+  <!--node pkg="tf" type="static_transform_publisher" name="fix_odom" args="0.123 0 0 0 0 0 odom base_footprint 50" /-->
 	
 
 </launch>

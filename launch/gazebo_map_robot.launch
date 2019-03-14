@@ -22,7 +22,8 @@
   </include>
 
   <arg name="model" />
-  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+  <!--param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" /-->
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find learning_nav)/urdf/robot1_base_04.xacro" />
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
   <!-- start robot state publisher -->

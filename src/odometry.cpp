@@ -33,8 +33,8 @@ int main(int argc, char** argv) {
 
 	// message declarations
 	geometry_msgs::TransformStamped odom_trans;
-	odom_trans.header.frame_id = "odom";
-	odom_trans.child_frame_id = "base_footprint";
+	odom_trans.header.frame_id = "odom2";  // 这样就定义了一个新的坐标系，叫做odom2，他默认在原点
+	odom_trans.child_frame_id = "base_footprint"; // odom_trans这个变换描述的就是base_footprint在odoms2坐标系中的位姿
 
 	while (ros::ok()) {
 		current_time = ros::Time::now(); 
@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
 		//filling the odometry
 		nav_msgs::Odometry odom;
 		odom.header.stamp = current_time;
-		odom.header.frame_id = "odom";
+		odom.header.frame_id = "odom2";
 		odom.child_frame_id = "base_footprint";
 
 		// position
