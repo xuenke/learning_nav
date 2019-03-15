@@ -28,7 +28,7 @@
    		</visual>
 		<xacro:default_inertial mass="0.0001"/>
  	</link>
-	<!--what is this???? robot.gazebo??? material properties for robot model-->
+	<!--robot.gazebo includes: material properties, sensor definition-->
  	<!--xacro:include filename="$(find robot1_description)/urdf/robot.gazebo" /-->
 	<xacro:include filename="$(find learning_nav)/robot_models/robot.gazebo" />
  
